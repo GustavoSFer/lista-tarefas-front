@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '../components/Button';
 import Input from '../components/Input';
 import myContext from '../context/myContext';
 
@@ -13,6 +14,7 @@ function Task() {
     <myContext.Provider value={context}>
       Pagina principal
       <Input />
+      <Button />
     </myContext.Provider>
   );
 }
