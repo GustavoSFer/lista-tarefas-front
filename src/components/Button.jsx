@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import myContext from '../context/myContext';
+import { addTask } from '../connectionDB';
 
 function Button() {
-  const { setInput } = useContext(myContext);
+  const { input, setInput } = useContext(myContext);
   const hancleClick = () => {
+    addTask('/', { task: input, status: 'Pendente' });
     setInput('');
   };
 
