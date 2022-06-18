@@ -3,7 +3,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import TableTask from '../components/TableTask';
 import myContext from '../context/myContext';
-import { taskRequest, addTask } from '../connectionDB/index';
+import { taskRequest, addTask, removeTask } from '../connectionDB/index';
 
 function Task() {
   const [input, setInput] = useState('');
@@ -14,7 +14,12 @@ function Task() {
     setTasks(data);
   };
 
-  const hancleClick = () => {
+  const handleDel = ({ target }) => {
+    removeTask('/', target.id);
+    TaskRequestDB();
+  };
+
+  const handleClick = () => {
     if (input !== '') {
       addTask('/', { task: input, status: 'Pendente' });
       setInput('');
@@ -33,9 +38,9 @@ function Task() {
   return (
     <myContext.Provider value={context}>
       <Input />
-      <Button hancleClick={hancleClick} />
+      <Button handleClick={handleClick}>Salvar</Button>
       <div>
-        <TableTask />
+        <TableTask handleDel={handleDel} />
       </div>
     </myContext.Provider>
   );

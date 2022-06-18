@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import myContext from '../context/myContext';
 import '../CSS/excluir.css';
+import Button from './Button';
 
-function TableTask() {
+function TableTask({ handleDel }) {
   const { tasks } = useContext(myContext);
 
   return (
@@ -20,7 +22,12 @@ function TableTask() {
             <tr key={task.task}>
               <td>{task.task}</td>
               <td>{task.status}</td>
-              <td className="excluir" />
+              {/* eslint no-underscore-dangle: 0 */}
+              <Button
+                handleClick={handleDel}
+              >
+                <td className="excluir" id={task._id} />
+              </Button>
             </tr>
           ))
         }
@@ -28,5 +35,9 @@ function TableTask() {
     </table>
   );
 }
+
+TableTask.propTypes = {
+  handleDel: PropTypes.func.isRequired,
+};
 
 export default TableTask;

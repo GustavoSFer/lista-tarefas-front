@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Button({ hancleClick }) {
+function Button({ children, handleClick }) {
   return (
-    <button type="button" onClick={hancleClick}>Salvar</button>
+    <button type="button" onClick={handleClick}>{children}</button>
   );
 }
 
 Button.propTypes = {
-  hancleClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default Button;
