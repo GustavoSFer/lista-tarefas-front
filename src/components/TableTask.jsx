@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { taskRequest } from '../connectionDB/index';
-// import excluir from '../image/excluir.png';
+import React, { useContext } from 'react';
+import myContext from '../context/myContext';
 import '../CSS/excluir.css';
 
 function TableTask() {
-  const [tasks, setTasks] = useState([]);
-
-  const TaskRequestDB = async () => {
-    const data = await taskRequest('/');
-    setTasks(data);
-  };
-
-  useEffect(() => {
-    TaskRequestDB();
-  }, []);
+  const { tasks } = useContext(myContext);
 
   return (
     <table>

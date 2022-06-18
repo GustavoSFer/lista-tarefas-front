@@ -1,18 +1,14 @@
-import React, { useContext } from 'react';
-import myContext from '../context/myContext';
-import { addTask } from '../connectionDB';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function Button() {
-  const { input, setInput } = useContext(myContext);
-
-  const hancleClick = () => {
-    addTask('/', { task: input, status: 'Pendente' });
-    setInput('');
-  };
-
+function Button({ hancleClick }) {
   return (
     <button type="button" onClick={hancleClick}>Salvar</button>
   );
 }
+
+Button.propTypes = {
+  hancleClick: PropTypes.func.isRequired,
+};
 
 export default Button;
