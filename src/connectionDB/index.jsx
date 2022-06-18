@@ -4,9 +4,10 @@ const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 // endpoint é o caminha que queremos -> ex: '/'; '/:id' ...
 const taskRequest = async (endpoint) => {
-  const { result } = axios.get((baseURL + endpoint));
+  // O retorno vem um obj que o resultado fica dentro de data
+  const { data } = await axios.get((baseURL + endpoint));
 
-  return result;
+  return data;
 };
 
 const addTask = async (endpoint, body) => {

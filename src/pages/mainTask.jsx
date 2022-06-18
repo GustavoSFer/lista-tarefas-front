@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import TableTask from '../components/TableTask';
 import myContext from '../context/myContext';
 
 function Task() {
@@ -12,9 +13,11 @@ function Task() {
 
   return (
     <myContext.Provider value={context}>
-      Pagina principal
       <Input />
       <Button />
+      <div>
+        <TableTask />
+      </div>
     </myContext.Provider>
   );
 }

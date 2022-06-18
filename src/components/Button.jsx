@@ -4,6 +4,7 @@ import { addTask } from '../connectionDB';
 
 function Button() {
   const { input, setInput } = useContext(myContext);
+
   const hancleClick = () => {
     addTask('/', { task: input, status: 'Pendente' });
     setInput('');

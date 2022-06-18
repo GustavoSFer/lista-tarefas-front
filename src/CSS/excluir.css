@@ -1,0 +1,11 @@
+.excluir {
+  background-image: url("../image/excluir.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 50px;
+  width: 50px;
+}
+
+.excluir:hover {
+  background-image: url("../image/excluir-aberto.png");
+}
