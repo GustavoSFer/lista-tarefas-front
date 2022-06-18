@@ -11,14 +11,15 @@ function Task() {
 
   const TaskRequestDB = async () => {
     const data = await taskRequest('/');
-    console.log(data);
     setTasks(data);
   };
 
   const hancleClick = () => {
-    addTask('/', { task: input, status: 'Pendente' });
-    setInput('');
-    TaskRequestDB();
+    if (input !== '') {
+      addTask('/', { task: input, status: 'Pendente' });
+      setInput('');
+      TaskRequestDB();
+    }
   };
 
   useEffect(() => {
