@@ -8,6 +8,7 @@ import { taskRequest, addTask, removeTask } from '../connectionDB/index';
 function Task() {
   const [input, setInput] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [del, setDel] = useState(false);
 
   const TaskRequestDB = async () => {
     const data = await taskRequest('/');
@@ -15,6 +16,7 @@ function Task() {
   };
 
   const handleDel = ({ target }) => {
+    setDel(!del);
     removeTask('/', target.id);
     TaskRequestDB();
   };
@@ -29,7 +31,7 @@ function Task() {
 
   useEffect(() => {
     TaskRequestDB();
-  }, []);
+  }, [input, del]);
 
   const context = React.useMemo(() => ({
     input, setInput, tasks,
