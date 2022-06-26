@@ -9,7 +9,7 @@ function Input() {
   };
 
   return (
-    <input type="text" placeholder="Digite a tarefa" onChange={handleChange} value={input} />
+    <input type="text" placeholder="Digite a tarefa" onChange={handleChange} value={input} className="form-control" />
   );
 }
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Button({ children, handleClick }) {
   return (
-    <button type="button" onClick={handleClick}>{children}</button>
+    <button type="button" className="btn btn-outline-secondary" onClick={handleClick}>{children}</button>
   );
 }
 

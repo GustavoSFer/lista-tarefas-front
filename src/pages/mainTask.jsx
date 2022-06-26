@@ -9,10 +9,39 @@ function Task() {
   const [input, setInput] = useState('');
   const [tasks, setTasks] = useState([]);
   const [del, setDel] = useState(false);
+  const [ordenar, setOrdenar] = useState('');
 
   const TaskRequestDB = async () => {
     const data = await taskRequest('/');
     setTasks(data);
+  };
+
+  const ordenacaoTask = () => {
+    if (ordenar === 'task') {
+      const filtro = [...tasks].sort((a, b) => {
+        if (a.task < b.task) {
+          return -1;
+        }
+        if (a.task > b.task) {
+          return 1;
+        }
+        return 0;
+      });
+      setTasks(filtro);
+    } else if (ordenar === 'status') {
+      if (ordenar === 'status') {
+        const filtro = [...tasks].sort((a, b) => {
+          if (a.status < b.status) {
+            return -1;
+          }
+          if (a.status > b.status) {
+            return 1;
+          }
+          return 0;
+        });
+        setTasks(filtro);
+      }
+    }
   };
 
   const handleDel = ({ target }) => {
@@ -34,15 +63,19 @@ function Task() {
   }, [input, del]);
 
   const context = React.useMemo(() => ({
-    input, setInput, tasks,
-  }), [input, tasks]);
+    input, setInput, tasks, setOrdenar,
+  }), [input, tasks, ordenar]);
 
   return (
     <myContext.Provider value={context}>
-      <Input />
-      <Button handleClick={handleClick}>Salvar</Button>
-      <div>
-        <TableTask handleDel={handleDel} />
+      <div className="container mt-4 mb-4">
+        <div className="input-group mb-3">
+          <Input />
+          <Button handleClick={handleClick}>Salvar</Button>
+        </div>
+        <div className="d-flex">
+          <TableTask handleDel={handleDel} optionOrder={ordenacaoTask} />
+        </div>
       </div>
     </myContext.Provider>
   );

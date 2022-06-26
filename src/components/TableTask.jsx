@@ -4,19 +4,52 @@ import myContext from '../context/myContext';
 import '../CSS/excluir.css';
 import Button from './Button';
 
-function TableTask({ handleDel }) {
-  const { tasks } = useContext(myContext);
+function TableTask({ handleDel, optionOrder }) {
+  const { tasks, setOrdenar } = useContext(myContext);
 
   return (
-    <table>
-      <thead>
+    <table className="table table-bordered">
+      <thead className="bg-success txtCenter">
         <tr>
-          <th>Tarefa</th>
-          <th>status</th>
-          <th>Excluir</th>
+          <th>
+            <button
+              type="button"
+              className="btn btn-success ps-4 pe-4"
+              onClick={(() => {
+                setOrdenar('task');
+                optionOrder();
+              })}
+            >
+              Tarefa
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              className="btn btn-success ps-4 pe-4"
+              onClick={(() => {
+                setOrdenar('status');
+                optionOrder();
+              })}
+            >
+              Status
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              className="btn btn-success ps-4 pe-4"
+              onClick={(() => {
+                setOrdenar('');
+                optionOrder();
+              })}
+            >
+              Excluir
+            </button>
+          </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className="txtCenter">
         {
           !tasks ? <h2>Sem tarefas cadastradas!</h2> : tasks.map((task) => (
             <tr key={task.task}>
@@ -38,6 +71,7 @@ function TableTask({ handleDel }) {
 
 TableTask.propTypes = {
   handleDel: PropTypes.func.isRequired,
+  optionOrder: PropTypes.func.isRequired,
 };
 
 export default TableTask;
