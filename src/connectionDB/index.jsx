@@ -13,6 +13,11 @@ const addTask = async (endpoint, body) => {
   axios.post((baseURL + endpoint), body);
 };
 
+const updateTask = async (endpoint, body) => {
+  console.log(endpoint, body);
+  axios.put((baseURL + endpoint), body);
+};
+
 const removeTask = async (endpoint, params) => {
   axios.delete(`${baseURL}${endpoint}${params}`);
 };
@@ -20,5 +25,6 @@ const removeTask = async (endpoint, params) => {
 export {
   taskRequest,
   addTask,
+  updateTask,
   removeTask,
 };

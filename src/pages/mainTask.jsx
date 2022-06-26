@@ -17,30 +17,19 @@ function Task() {
   };
 
   const ordenacaoTask = () => {
-    if (ordenar === 'task') {
+    if (ordenar !== '') {
+      console.log('>>>>', ordenar);
       const filtro = [...tasks].sort((a, b) => {
-        if (a.task < b.task) {
+        if (a.ordenar < b[ordenar]) {
           return -1;
         }
-        if (a.task > b.task) {
+        if (a[ordenar] > b[ordenar]) {
           return 1;
         }
         return 0;
       });
       setTasks(filtro);
-    } else if (ordenar === 'status') {
-      if (ordenar === 'status') {
-        const filtro = [...tasks].sort((a, b) => {
-          if (a.status < b.status) {
-            return -1;
-          }
-          if (a.status > b.status) {
-            return 1;
-          }
-          return 0;
-        });
-        setTasks(filtro);
-      }
+      console.log(tasks);
     }
   };
 
@@ -60,11 +49,12 @@ function Task() {
 
   useEffect(() => {
     TaskRequestDB();
-  }, [input, del]);
+    ordenacaoTask();
+  }, [input, del, ordenar]);
 
   const context = React.useMemo(() => ({
     input, setInput, tasks, setOrdenar,
-  }), [input, tasks, ordenar]);
+  }), [input, tasks]);
 
   return (
     <myContext.Provider value={context}>
