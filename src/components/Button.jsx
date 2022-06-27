@@ -7,8 +7,9 @@ function Button({ children, handleClick }) {
   );
 }
 
+Button.defaultProps = { children: '' };
 Button.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   handleClick: PropTypes.func.isRequired,
 };
 

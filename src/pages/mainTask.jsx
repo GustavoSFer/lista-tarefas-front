@@ -3,45 +3,66 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import TableTask from '../components/TableTask';
 import myContext from '../context/myContext';
-import { taskRequest, addTask, removeTask } from '../connectionDB/index';
+import {
+  taskRequest,
+  addTask,
+  removeTask,
+  updateTask,
+} from '../connectionDB/index';
 
 function Task() {
   const [input, setInput] = useState('');
   const [tasks, setTasks] = useState([]);
-  const [del, setDel] = useState(false);
   const [ordenar, setOrdenar] = useState('');
 
-  const TaskRequestDB = async () => {
-    const data = await taskRequest('/');
-    setTasks(data);
-  };
-
-  const ordenacaoTask = () => {
-    if (ordenar !== '') {
-      console.log('>>>>', ordenar);
-      const filtro = [...tasks].sort((a, b) => {
-        if (a.ordenar < b[ordenar]) {
+  const ordenacaoTask = (lista, type) => {
+    if (type !== '') {
+      const filtro = [...lista].sort((a, b) => {
+        if (a[type] < b[type]) {
           return -1;
         }
-        if (a[ordenar] > b[ordenar]) {
+        if (a[type] > b[type]) {
           return 1;
         }
         return 0;
       });
-      setTasks(filtro);
-      console.log(tasks);
+      return filtro;
     }
+    return lista;
   };
 
-  const handleDel = ({ target }) => {
-    setDel(!del);
-    removeTask('/', target.id);
+  const TaskRequestDB = async () => {
+    const data = await taskRequest('/');
+    const listOrder = ordenacaoTask(data, ordenar);
+    setTasks(listOrder);
+  };
+
+  const statusOptions = async (task) => {
+    const statusTask = ['Pendente', 'Em andamento', 'Pronto'];
+    const posicao = statusTask.indexOf(task.status);
+
+    const status = (posicao < statusTask.length - 1)
+      ? statusTask[posicao + 1]
+      : statusTask[0];
+
+    const db = {
+      /* eslint no-underscore-dangle: 0 */
+      id: task._id,
+      task: task.task,
+      status,
+    };
+    await updateTask('/', db);
     TaskRequestDB();
   };
 
-  const handleClick = () => {
+  const handleDel = async (id) => {
+    await removeTask('/', id);
+    TaskRequestDB();
+  };
+
+  const handleClick = async () => {
     if (input !== '') {
-      addTask('/', { task: input, status: 'Pendente' });
+      await addTask('/', { task: input, status: 'Pendente' });
       setInput('');
       TaskRequestDB();
     }
@@ -49,11 +70,10 @@ function Task() {
 
   useEffect(() => {
     TaskRequestDB();
-    ordenacaoTask();
-  }, [input, del, ordenar]);
+  }, [ordenar]);
 
   const context = React.useMemo(() => ({
-    input, setInput, tasks, setOrdenar,
+    input, setInput, tasks, setOrdenar, TaskRequestDB,
   }), [input, tasks]);
 
   return (
@@ -64,7 +84,11 @@ function Task() {
           <Button handleClick={handleClick}>Salvar</Button>
         </div>
         <div className="d-flex">
-          <TableTask handleDel={handleDel} optionOrder={ordenacaoTask} />
+          <TableTask
+            handleDel={handleDel}
+            optionOrder={ordenacaoTask}
+            statusOptions={statusOptions}
+          />
         </div>
       </div>
     </myContext.Provider>
