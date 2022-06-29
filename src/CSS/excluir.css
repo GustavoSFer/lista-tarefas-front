@@ -1,0 +1,15 @@
+.excluir {
+  background-image: url("../image/excluir.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 35px;
+  width: 35px;
+}
+
+.excluir:hover {
+  background-image: url("../image/excluir-aberto.png");
+}
+
+.txtCenter {
+  text-align: center;
+}
